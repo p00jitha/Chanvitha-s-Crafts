@@ -1,25 +1,45 @@
 import bcrypt from 'bcryptjs';
+import nodemailer from 'nodemailer'
 import User from "../models/user_model.js"
 import generateToken from '../utils/generateToken.js';
+import userOTPverification from '../models/userOTPverfication.js'
+
+const transporter = nodemailer.createTransport({
+   service: 'gmail',
+   auth: {
+     user:process.env.AUTH_EMAIL,
+     pass:process.env.AUTH_PASS
+   },
+   host: 'smtp.gmail.com',
+   port: 5000,
+   secure: false,
+   requireTLS: true
+ });
+
 
 export const signup=async(req,res)=>{
    try{
         const {email,username,password} = req.body
-        const user = await User.findOne({username})
+        const user = await User.findOne({email})
         if(user)
         {
-         return res.status(400).json({error:"username already exists"})
+         return res.status(400).json({error:"user already exists"})
         }
         const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(password,salt);
 
         const newUser = new User({
-         email,username,password:hashedPassword
+         email,username,
+         password:hashedPassword,
+         verified:false,
         })
        
         if(newUser)
         {
-        await newUser.save();
+        await newUser.save()
+        .then((result)=>{
+         sendOTPverification(result,res);
+        })
         generateToken(newUser._id,res)
         res.status(201).json({
          _id:newUser._id,
@@ -77,4 +97,38 @@ export const login= async(req,res)=>{
       console.log(err)
       res.status(500).json({error:"error in logout"})
     }
+ }
+
+ const sendOTPverification = async({_id,email},res)=>{
+   try{
+      const otp = `${Math.floor(10000+Math.random()*9000)}`;
+      const mailOptions = {
+         from:process.env.AUTH_EMAIL,
+         to:email,
+         subject:"verify your email",
+         html:`<p>Enter <b>${otp} in the app to verify your email address</b></p>
+         <p>This code expires in 1hr</p>`
+      }
+      const hashedOTP = await bcrypt.hash(otp,10)
+      const newOTPverification = await new userOTPverification({
+         userId:_id,
+         otp:hashedOTP,
+         createdAt:Date.now(),
+         expiresAt:Date.now()+3600000,
+      })
+      await newOTPverification.save();
+      await transporter.sendMail(mailOptions);
+      res.json({
+         status:"pending",
+         message:"verification otp email sent",
+         data:{
+            userId:_id,
+            email
+         }
+      })
+   }
+   catch(err)
+   {
+      console.log(err)
+   }
  }
