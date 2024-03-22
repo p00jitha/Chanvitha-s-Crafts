@@ -1,25 +1,26 @@
 import bcrypt from 'bcryptjs';
-import nodemailer from 'nodemailer'
-import User from "../models/user_model.js"
+import nodemailer from 'nodemailer';
+import dotenv from 'dotenv';
+import User from "../models/user_model.js";
 import generateToken from '../utils/generateToken.js';
-import userOTPverification from '../models/userOTPverfication.js'
+import userOTPverification from '../models/userOTPverfication.js';
 
-const transporter = nodemailer.createTransport({
+dotenv.config();
+
+ const transporter = nodemailer.createTransport({
    service: 'gmail',
-   auth: {
-     user:process.env.AUTH_EMAIL,
-     pass:process.env.AUTH_PASS
-   },
    host: 'smtp.gmail.com',
-   port: 5000,
-   secure: false,
-   requireTLS: true
+   port: 465,
+   secure: true,
+   auth: {
+     user: process.env.AUTH_EMAIL,
+     pass: process.env.AUTH_PASS,
+   }, 
  });
-
-
+ 
 export const signup=async(req,res)=>{
    try{
-        const {email,username,password} = req.body
+        const {email,username,password} = req.body 
         const user = await User.findOne({email})
         if(user)
         {
@@ -41,10 +42,7 @@ export const signup=async(req,res)=>{
          sendOTPverification(result,res);
         })
         generateToken(newUser._id,res)
-        res.status(201).json({
-         _id:newUser._id,
-         username:newUser.username
-        }) 
+       
         }
         else
         {
