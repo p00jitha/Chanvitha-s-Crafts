@@ -130,3 +130,74 @@ export const login= async(req,res)=>{
       console.log(err)
    }
  }
+
+ export const otpverification = async(req,res)=>{
+   try{
+      let {userId,otp} = req.body;
+      if(!userId || !otp)
+      {
+         res.status(400).json({error:"Enter OTP"})
+      }
+      else
+      {
+         const UserVerificationRecords = await userOTPverification.find({userId});
+         if(UserVerificationRecords.length<=0)
+         {
+            res.status(400).json({error:"Acc record doesn't exist or has been verified already.Please Signup"})
+         }
+         else
+         {
+            const {expiresAt} = UserVerificationRecords[0];
+            const hashedOTP = UserVerificationRecords[0].otp;
+            if(expiresAt<Date.now())
+            {
+               await userOTPverification.deleteMany({userId});
+               res.status(400).json({error:"Code has expired. Please Signup again."})
+            }
+            else
+            {
+               const validOTP = await bcrypt.compare(otp,hashedOTP)
+               if(!validOTP)
+               {
+                  res.status(400).json({error:"Invalid code passed. Check your inbox."})
+               }
+               else
+               {
+                  await User.updateOne({_id:userId},{verified:true});
+                  await userOTPverification.deleteMany({userId});
+                  res.json({
+                     status:"verified",
+                     message:"user email verified successfully",
+                  })
+               }
+            }
+         }
+      }
+   }catch(err)
+   {
+      res.status(400).json({error:"error"})
+      console.log(err)
+   }
+ }
+
+ export const resendOTP = async(req,res)=>{
+   try{
+      let {userId,email} = req.body;
+      if(!userId || !email)
+      {
+         res.status(500).json({error:"Empty user details are not allowed"})
+      }
+      else
+      {
+         await userOTPverification.deleteMany({userId});
+         sendOTPverification({_id:userId,email},res);
+      }
+   }
+   catch(error)
+   {
+      res.json({
+         status:"FAILED",
+         message:error.message
+      });
+   }
+ }
