@@ -41,7 +41,7 @@ export const signup=async(req,res)=>{
         .then((result)=>{
          sendOTPverification(result,res);
         })
-        generateToken(newUser._id,res)
+        //generateToken(newUser._id,res)
        
         }
         else

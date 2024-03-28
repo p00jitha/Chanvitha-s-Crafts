@@ -72,8 +72,8 @@ export const delete_cart_item = async(req,res)=>{
     const userId = req.params.userId;
     const productId = req.params.productId;
     try{
-         let cart = Cart.findOne({userId});
-         let itemIndex = cart.items.findIndex(p=>p.productId == productId);
+         let cart = await Cart.findOne({userId});
+         let itemIndex = cart.items.findIndex(p=>p._id== productId);
          if(itemIndex > -1)
         {
             let productItem = cart.items[itemIndex];
