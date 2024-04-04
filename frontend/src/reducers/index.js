@@ -5,10 +5,12 @@ import cartReducer from './cartReducer';
 import errorReducer from './errorReducer'
 import orderReducer from './orderReducer';
 
-export default combineReducers({
+const reducer = combineReducers({
     item: itemReducer,
     error: errorReducer,
     auth: authReducer,
     cart: cartReducer,
     order: orderReducer
 })
+
+export default reducer;
