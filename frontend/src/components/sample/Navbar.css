@@ -1,0 +1,29 @@
+#header .fixed-top{
+    box-shadow: 0 0.125rem 0.675rem rgb(0 0 0 / 5%);
+}
+#header .navbar-nav .nav-item .nav-link{
+    color:var(--text-white);
+    padding:0.5rem 1rem;
+    text-align: center;
+}
+#header .navbar-nav .nav-item .nav-link:hover,
+#header .navbar-nav .nav-item .nav-link.active{
+    color:var(--text-dark);
+}
+#header .navbar-toggler-icon{
+    width:unset;
+    height:unset;
+}
+#header .navbar-toggler:focus{
+    box-shadow: none;
+}
+.navbar-brand img{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+#header .navbar-nav .nav-item .nav-link #card{
+   margin-bottom:0%;
+   padding: 0;
+ }
+ 

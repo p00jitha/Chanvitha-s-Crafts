@@ -58,8 +58,8 @@ export const signup=async(req,res)=>{
 
 export const login= async(req,res)=>{
     try{
-          const {username,password} = req.body;
-          const user = await User.findOne({username})
+          const {email,password} = req.body;
+          const user = await User.findOne({email})
           if(user)
           {
             const isPasswordcorrect = await bcrypt.compare(password,user.password)
@@ -70,7 +70,7 @@ export const login= async(req,res)=>{
             generateToken(user._id,res)
            res.status(201).json({
             _id:user._id,
-         username:user.username
+            email:user.email
            }) 
           }
           else

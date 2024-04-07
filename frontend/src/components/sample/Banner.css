@@ -1,0 +1,127 @@
+.home .home-banner-1,
+.home .home-banner-2{
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 90% center;
+    min-height: 650px;
+    position:relative;
+} 
+.home .home-banner-1{
+    background-image:url('https://www.thesprucecrafts.com/thmb/O6kXTLQIOWn4iD4B4GlOUW1jerA=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-621314378-a96e1066238b4dc687fa66be987e823c.jpg');
+}
+.home .home-banner-2{
+    background-image:url('https://i.pinimg.com/1200x/99/39/33/993933e1a2432bfe80dfb21a86311370.jpg');
+}
+.home .home-banner .home-banner-text{
+    position:absolute;
+    top:50%;
+    left:70%;
+    color:#201658;
+    transform:translate(-110%, -50%)
+}
+.home .home-banner .home-banner-text h2{
+    font-size: 3rem;
+    font-weight: bolder;
+    font-style: italic;
+    font-family: 'Times New Roman', Times, serif;
+}
+.home .home-banner .home-banner-text h4{
+    font-size: 1.5rem;
+    font-style: italic;
+    font-family:sans-serif;
+}
+.home .carousel-indicators [data-bs-target]{
+    background-color:var(--bg-danger);
+    width:2.5rem;
+    height:0.313rem;
+}
+.home .carousel-control-next-icon,
+.home .carousel-control-prev-icon{
+    background: transparent;
+}
+.home .slider-icon{
+    font-size: 3rem;
+    font-weight: 600;
+    color:var(--text-danger);
+}
+
+/* Offer CSS */
+.offers{
+    padding-top:8.75rem;
+}
+.offers .offer-box .offer-image::before{
+    position:absolute;
+    content:'';
+    top:0;
+    left:-100%;
+    z-index: 2;
+    display:block;
+    width:50%;
+    height:100%;
+    background:-webkit-linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 100%);
+    background:linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 100%);
+    transform:skewX(-25deg);
+}
+.offers .offer-box .offer-image img{
+    transform:scale(1.02);
+    width:400px;
+    height:400px;
+    object-fit: cover;
+}
+.offers .offer-box:hover .offer-image::before{
+    animation:effect_shine 1s;
+}
+@keyframes effect_shine{
+    100%{
+        left:150%;
+    }
+}
+.offers .offer-overlay::before{
+    content:'';
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.4);
+    z-index: 1;
+}
+.offers .offer-box .offer-info{
+    position:absolute;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    display:flex;
+    flex-direction: column;
+    z-index: 1;
+    transition:all 250ms ease-out;
+    justify-content:center;
+    align-items:center;
+}
+.offers .offer-box .offer-info .heading-bigger{
+    font-size: 4.375rem;
+    line-height: 1;
+    text-transform: uppercase; 
+    font-weight: 400;
+    margin-bottom:0;
+    color:var(--text-white);
+}
+.offers .offer-box .offer-info .offer-title-1{
+    color:var(--text-white);
+    font-size: 1.125rem;
+    font-weight: 300;
+    margin-bottom: 0;
+    letter-spacing:2px;
+}
+.offers .offer-box .offer-info .btn-outline-danger{
+    color:var(--text-white);
+    border-color:var(--bg-white);
+    transition:all 0.3s ease-in-out;
+}
+.offers .offer-box .offer-info .btn-outline-danger:hover{
+    border-color: var(--bg-danger);
+    background-color:var(--bg-danger);
+}

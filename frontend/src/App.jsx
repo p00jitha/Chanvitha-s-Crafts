@@ -1,15 +1,19 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import {Navigate, Route, Routes } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import store from './Store';
-import { loadUser } from './actions/Auth';
+import './index.css'
+import Home from './components/sample/Home';
 import LoginModal from './components/auth/loginModal';
+import SignupModal from './components/auth/signupModal';
 const App = () => {
-  useEffect(() => {
-    store.dispatch(loadUser());
-  }, []);
+
   return (
         <div className="App">
-          <LoginModal/>
+          <Routes>
+				<Route path='/' element={  <Home /> } />
+				<Route path='/login' element={<LoginModal/>} />
+				<Route path='/signup' element={ <SignupModal/>} />
+			</Routes>
         </div>
   );
 };
