@@ -5,6 +5,7 @@ import './index.css'
 import Home from './components/sample/Home';
 import LoginModal from './components/auth/loginModal';
 import SignupModal from './components/auth/signupModal';
+import Products from './components/sample/Products';
 const App = () => {
 
   return (
@@ -13,6 +14,7 @@ const App = () => {
 				<Route path='/' element={  <Home /> } />
 				<Route path='/login' element={<LoginModal/>} />
 				<Route path='/signup' element={ <SignupModal/>} />
+        <Route path='/products' element={ <Products/>} />
 			</Routes>
         </div>
   );
