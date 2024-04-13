@@ -37,13 +37,13 @@ export const register = (email,username,password) => dispatch =>{
     })
 }
 
-export const login = (username,password) => dispatch =>{
+export const login = (email,password) => dispatch =>{
     const config={
         headers:{
             'Content-Type':'application/json'
         }
     }
-    const body = JSON.stringify({username,password});
+    const body = JSON.stringify({email,password});
     axios.post('/api/auth/login',body,config)
     .then(res=>dispatch({
         type:LOGIN_SUCCESS,

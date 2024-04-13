@@ -1,5 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import cclogo from '../assests/cclogo.png'
 import './Navbar.css'
 const Navbar = () => {
   return (
@@ -7,6 +8,7 @@ const Navbar = () => {
       <section id="header">
       <nav className="navbar navbar-expand-lg bg-light  fixed-top">
         <div className="container">
+        <img src={cclogo} alt='image' style={{width:"80px",height:"70px"}}/>
         <Link to='/' className="navbar-brand" style={{"color":"red","fontSize": "1.5rem","fontWeight": "bolder",
     "fontStyle": "italic",
     "fontFamily": " 'Times New Roman', Times, serif"}}>
