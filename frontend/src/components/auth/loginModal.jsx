@@ -56,7 +56,6 @@ const onSubmit = (e) => {
   e.preventDefault();
 
   const user = { email, password };
-  console.log(user)
   dispatch(login(user.email, user.password));
 };
 
